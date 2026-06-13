@@ -1,7 +1,8 @@
 /*
-Sketch uses 935328 bytes (71%) of program storage space. Maximum is 1310720 bytes.
+Sketch uses 935344 bytes (71%) of program storage space. Maximum is 1310720 bytes.
 Global variables use 46816 bytes (14%) of dynamic memory, leaving 280864 bytes for local variables. Maximum is 327680 bytes.
-1299/1299 bytes... Done.
+100.0% 595754/595754 bytes... 
+Wrote 935488 bytes (595754 compressed) at 0x00010000 in 9.4 seconds (792.7 kbit/s).
 */
 
 #include "config.h"
