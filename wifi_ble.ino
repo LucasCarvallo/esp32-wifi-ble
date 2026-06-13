@@ -9,12 +9,68 @@ Wrote 935840 bytes (595906 compressed) at 0x00010000 in 9.7 seconds (774.7 kbit/
 #include "api_client.h"
 #include "display.h"
 #include "led_status.h"
+#include "wifi_scanner.h"
 #include <WiFi.h>
+
+namespace {
+WifiDevice wifiDevices[WIFI_SCAN_MAX_RESULTS];
+unsigned long lastWifiScan = 0;
+
+String wifiDisplayName(const WifiDevice& device) {
+    if (device.ssid.length() > 0) {
+        return device.ssid;
+    }
+
+    return String("<oculta>");
+}
+
+void runWifiScanAndShow() {
+    displayShowLines("Escaneando WiFi...", "");
+
+    const int totalFound = wifiScanNetworks(wifiDevices, WIFI_SCAN_MAX_RESULTS);
+    if (totalFound < 0) {
+        displayShowLines("Escaneo WiFi", "Error al escanear");
+        Serial.println("Error al escanear redes Wi-Fi");
+        return;
+    }
+
+    if (totalFound == 0) {
+        displayShowLines("Escaneo WiFi", "No se encontraron", "redes cercanas");
+        Serial.println("No se encontraron redes Wi-Fi");
+        return;
+    }
+
+    const WifiDevice& best = wifiDevices[0];
+    displayShowLines(
+        "Escaneo WiFi",
+        String("Redes: ") + String(totalFound),
+        String("Top: ") + wifiDisplayName(best),
+        String("RSSI: ") + String(best.rssi) + String(" dBm CH: ") + String(best.channel)
+    );
+
+    Serial.println("Redes Wi-Fi encontradas:");
+    const int visibleCount = totalFound < static_cast<int>(WIFI_SCAN_MAX_RESULTS)
+        ? totalFound
+        : static_cast<int>(WIFI_SCAN_MAX_RESULTS);
+    for (int index = 0; index < visibleCount; ++index) {
+        Serial.print(index + 1);
+        Serial.print(". ");
+        Serial.print(wifiDisplayName(wifiDevices[index]));
+        Serial.print(" | RSSI: ");
+        Serial.print(wifiDevices[index].rssi);
+        Serial.print(" | CH: ");
+        Serial.print(wifiDevices[index].channel);
+        Serial.print(" | BSSID: ");
+        Serial.println(wifiDevices[index].bssid);
+    }
+}
+} // namespace
 
 void setup() {
     Serial.begin(115200);
     delay(1000);
 
+    wifiScannerBegin();
     wifiLedBegin();
     wifiLedSetState(WifiLedState::Connecting);
 
@@ -40,6 +96,9 @@ void setup() {
     wifiLedSetState(WifiLedState::Connected);
     displayText("Conectado a Wi-Fi", 0, 0, 1);
     displayText(WiFi.localIP().toString().c_str(), 0, 10, 1);
+
+    runWifiScanAndShow();
+    lastWifiScan = millis();
 }
 
 // void setup() {
@@ -63,20 +122,10 @@ void loop() {
     }
 
     wifiLedUpdate();
-
-    static unsigned long lastPlaceholderAction = 0;
     const unsigned long now = millis();
-    if (now - lastPlaceholderAction >= 10000) {
-        lastPlaceholderAction = now;
-
-        // Aquí iría la lógica para escanear Wi-Fi y Bluetooth
-        // Por ejemplo, podrías llamar a funciones como:
-        // escanearWiFi();
-        // escanearBLE();
-
-        // Luego, enviar los datos al API de Laravel:
-        // String payload = crearPayloadJSON(datosEscaneados);
-        // enviarDatosAlAPI("/endpoint", payload);
+    if (WiFi.status() == WL_CONNECTED && now - lastWifiScan >= WIFI_SCAN_INTERVAL_MS) {
+        lastWifiScan = now;
+        runWifiScanAndShow();
     }
 
     delay(10);

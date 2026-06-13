@@ -1,3 +1,8 @@
+#ifndef MODELS_H
+#define MODELS_H
+
+#include <Arduino.h>
+
 struct WifiDevice {
     String ssid;
     String bssid;
@@ -10,3 +15,5 @@ struct BleDevice {
     String name;
     int rssi;
 };
+
+#endif
