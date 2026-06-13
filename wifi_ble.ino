@@ -63,6 +63,8 @@ void runWifiScanAndShow() {
         Serial.print(" | BSSID: ");
         Serial.println(wifiDevices[index].bssid);
     }
+
+    enviarWifiScanAlAPI(wifiDevices, visibleCount, totalFound);
 }
 } // namespace
 

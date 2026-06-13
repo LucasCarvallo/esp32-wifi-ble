@@ -26,3 +26,29 @@ void enviarDatosAlAPI(const String& endpoint, const String& payload) {
         Serial.println("No conectado a Wi-Fi");
     }
 }
+
+void enviarWifiScanAlAPI(const WifiDevice* devices, size_t count, int totalFound) {
+    if (devices == nullptr || count == 0) {
+        Serial.println("No hay redes Wi-Fi para enviar al API");
+        return;
+    }
+
+    String payload = "{\"total_found\":" + String(totalFound) + ",\"visible\":" + String(count) + ",\"devices\":";
+    payload += "[";
+
+    for (size_t index = 0; index < count; ++index) {
+        if (index > 0) {
+            payload += ",";
+        }
+
+        payload += "{\"ssid\":\"" + devices[index].ssid + "\"";
+        payload += ",\"bssid\":\"" + devices[index].bssid + "\"";
+        payload += ",\"rssi\":" + String(devices[index].rssi);
+        payload += ",\"channel\":" + String(devices[index].channel);
+        payload += "}";
+    }
+
+    payload += "]}";
+
+    enviarDatosAlAPI("/api/wifi-scan", payload);
+}
