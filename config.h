@@ -1,14 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-// Credenciales de la red Wi-Fi de tu casa
-constexpr char WIFI_SSID[] = "WIFI_CASA";
-constexpr char WIFI_PASSWORD[] = "WIFI_CASA_CLAVE";
-
-// URL de tu API de Laravel (Ajusta la IP local de tu PC)
-// Nota: Si usas "php artisan serve", recuerda levantar el servidor con:
-// php artisan serve --host=0.0.0.0
-constexpr char LARAVEL_API_URL[] = "http://1.xx";
+#include "secrets.h"
 
 // Configuraciones del Escáner
 #define TIEMPO_ESCANEO_WIFI 30   // Segundos dedicados al sniffer Wi-Fi
