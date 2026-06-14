@@ -74,8 +74,8 @@ void setup() {
     delay(1000);
 
     wifiScannerBegin();
-    wifiLedBegin();
-    wifiLedSetState(WifiLedState::Connecting);
+    // wifiLedBegin();
+    // wifiLedSetState(WifiLedState::Connecting);
 
     if (!displayInit()) {
         Serial.println("Error al inicializar la pantalla OLED");
@@ -100,13 +100,13 @@ void setup() {
 }
 
 void loop() {
-    if (WiFi.status() == WL_CONNECTED) {
-        wifiLedSetState(WifiLedState::Connected);
-    } else {
-        wifiLedSetState(WifiLedState::Connecting);
-    }
+    // if (WiFi.status() == WL_CONNECTED) {
+    //     wifiLedSetState(WifiLedState::Connected);
+    // } else {
+    //     wifiLedSetState(WifiLedState::Connecting);
+    // }
+    // wifiLedUpdate();
 
-    wifiLedUpdate();
     const unsigned long now = millis();
     if (WiFi.status() == WL_CONNECTED && now - lastWifiScan >= WIFI_SCAN_INTERVAL_MS) {
         lastWifiScan = now;
