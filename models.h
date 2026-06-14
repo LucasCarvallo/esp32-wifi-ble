@@ -3,12 +3,12 @@
 
 #include <Arduino.h>
 
-// struct WifiDevice {
-//     String ssid;
-//     String bssid;
-//     int rssi;
-//     int channel;
-// };
+struct WifiDevice {
+    String ssid;
+    String bssid;
+    int rssi;
+    int channel;
+};
 
 // struct BleDevice {
 //     String mac;
