@@ -71,8 +71,8 @@ void setup() {
     delay(1000);
 
     wifiScannerBegin();
-    // wifiLedBegin();
-    // wifiLedSetState(WifiLedState::Connecting);
+    wifiLedBegin();
+    wifiLedSetState(WifiLedState::Connecting);
 
     if (!displayInit()) {
         Serial.println("Error al inicializar la pantalla OLED");
