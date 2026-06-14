@@ -10,10 +10,10 @@ struct WifiDevice {
     int channel;
 };
 
-struct BleDevice {
-    String mac;
-    String name;
-    int rssi;
-};
+// struct BleDevice {
+//     String mac;
+//     String name;
+//     int rssi;
+// };
 
 #endif
