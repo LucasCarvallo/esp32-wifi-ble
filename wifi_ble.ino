@@ -1,8 +1,8 @@
 /* php artisan serve --host=0.0.0.0 --port=8000
-Sketch uses 1076936 bytes (82%) of program storage space. Maximum is 1310720 bytes.
-Global variables use 50424 bytes (15%) of dynamic memory, leaving 277256 bytes for local variables. Maximum is 327680 bytes.
-100.0% 625904/625904 bytes... 
-Wrote 880640 bytes (625904 compressed) at 0x00040000 in 9.8 seconds (721.9 kbit/s).
+Sketch uses 1077392 bytes (82%) of program storage space. Maximum is 1310720 bytes.
+Global variables use 50440 bytes (15%) of dynamic memory, leaving 277240 bytes for local variables. Maximum is 327680 bytes.
+100.0% 688741/688741 bytes... 
+Wrote 1081344 bytes (688741 compressed) at 0x00010000 in 11.4 seconds (758.3 kbit/s).
 */
 
 #include "config.h"
