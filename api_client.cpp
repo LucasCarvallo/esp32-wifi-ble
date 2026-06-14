@@ -42,7 +42,9 @@ void enviarWifiScanAlAPI(const ManagedAccessPoint* devices, size_t count, int to
         }
 
         payload += "{\"ssid\":\"" + devices[index].ssid + "\"";
-        payload += ",\"bssid\":\"" + devices[index].bssid + "\"";
+        payload += ",\"bssid\":\"";
+        payload += devices[index].bssid;
+        payload += "\"";
         payload += ",\"rssi\":" + String(devices[index].rssi);
         payload += ",\"channel\":" + String(devices[index].channel);
         payload += ",\"hidden\":" + String(devices[index].hidden ? "true" : "false");

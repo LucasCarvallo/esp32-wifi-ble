@@ -3,9 +3,11 @@
 
 #include <Arduino.h>
 
+constexpr size_t WIFI_MAC_STR_LEN = 18;
+
 struct WifiDevice {
     String ssid;
-    String bssid;
+    char bssid[WIFI_MAC_STR_LEN];
     int rssi;
     int channel;
 };
@@ -23,22 +25,22 @@ enum class ScanMode {
 
 struct AccessPoint {
     String ssid;
-    String bssid;
+    char bssid[WIFI_MAC_STR_LEN];
     int rssi;
     int channel;
     bool hidden;
 };
 
 struct WifiClient {
-    String mac;
-    String associatedBssid;
+    char mac[WIFI_MAC_STR_LEN];
+    char associatedBssid[WIFI_MAC_STR_LEN];
     int rssi;
     int channel;
 };
 
 struct AccessPointDetection {
     String ssid;
-    String bssid;
+    char bssid[WIFI_MAC_STR_LEN];
     String detectorDeviceId;
     String scanSessionId;
     ScanMode scanMode;
@@ -48,11 +50,11 @@ struct AccessPointDetection {
 };
 
 struct WifiClientDetection {
-    String mac;
+    char mac[WIFI_MAC_STR_LEN];
     String detectorDeviceId;
     String scanSessionId;
     ScanMode scanMode;
-    String associatedBssid;
+    char associatedBssid[WIFI_MAC_STR_LEN];
     unsigned long detectedAt;
     int rssi;
     int channel;
