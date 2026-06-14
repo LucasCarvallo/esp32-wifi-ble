@@ -7,7 +7,7 @@ void wifiScannerBegin() {
     WiFi.setSleep(false);
 }
 
-int wifiScanNetworks(WifiDevice* devices, size_t maxDevices) {
+int wifiScanNetworks(ManagedAccessPoint* devices, size_t maxDevices) {
     if (devices == nullptr || maxDevices == 0) {
         return 0;
     }
@@ -24,6 +24,7 @@ int wifiScanNetworks(WifiDevice* devices, size_t maxDevices) {
         devices[index].bssid = WiFi.BSSIDstr(static_cast<int>(index));
         devices[index].rssi = WiFi.RSSI(static_cast<int>(index));
         devices[index].channel = WiFi.channel(static_cast<int>(index));
+        devices[index].hidden = devices[index].ssid.length() == 0;
     }
 
     WiFi.scanDelete();

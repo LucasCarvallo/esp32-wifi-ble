@@ -7,6 +7,6 @@
 #include "models.h"
 
 void wifiScannerBegin();
-int wifiScanNetworks(WifiDevice* devices, size_t maxDevices);
+int wifiScanNetworks(ManagedAccessPoint* devices, size_t maxDevices);
 
 #endif

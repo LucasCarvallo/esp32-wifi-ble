@@ -27,7 +27,7 @@ void enviarDatosAlAPI(const String& endpoint, const String& payload) {
     }
 }
 
-void enviarWifiScanAlAPI(const WifiDevice* devices, size_t count, int totalFound) {
+void enviarWifiScanAlAPI(const ManagedAccessPoint* devices, size_t count, int totalFound) {
     if (devices == nullptr || count == 0) {
         Serial.println("No hay redes Wi-Fi para enviar al API");
         return;
@@ -45,6 +45,7 @@ void enviarWifiScanAlAPI(const WifiDevice* devices, size_t count, int totalFound
         payload += ",\"bssid\":\"" + devices[index].bssid + "\"";
         payload += ",\"rssi\":" + String(devices[index].rssi);
         payload += ",\"channel\":" + String(devices[index].channel);
+        payload += ",\"hidden\":" + String(devices[index].hidden ? "true" : "false");
         payload += "}";
     }
 

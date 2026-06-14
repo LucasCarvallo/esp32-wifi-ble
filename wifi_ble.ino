@@ -3,6 +3,8 @@ Sketch uses 935684 bytes (71%) of program storage space. Maximum is 1310720 byte
 Global variables use 46832 bytes (14%) of dynamic memory, leaving 280848 bytes for local variables. Maximum is 327680 bytes.
 100.0% 595906/595906 bytes... 
 Wrote 935840 bytes (595906 compressed) at 0x00010000 in 9.7 seconds (774.7 kbit/s).
+
+// php artisan serve --host=0.0.0.0 --port=8000
 */
 
 #include "config.h"
@@ -13,10 +15,10 @@ Wrote 935840 bytes (595906 compressed) at 0x00010000 in 9.7 seconds (774.7 kbit/
 #include <WiFi.h>
 
 namespace {
-WifiDevice wifiDevices[WIFI_SCAN_MAX_RESULTS];
+ManagedAccessPoint wifiDevices[WIFI_SCAN_MAX_RESULTS];
 unsigned long lastWifiScan = 0;
 
-String wifiDisplayName(const WifiDevice& device) {
+String wifiDisplayName(const ManagedAccessPoint& device) {
     if (device.ssid.length() > 0) {
         return device.ssid;
     }
@@ -40,7 +42,7 @@ void runWifiScanAndShow() {
         return;
     }
 
-    const WifiDevice& best = wifiDevices[0];
+    const ManagedAccessPoint& best = wifiDevices[0];
     displayShowLines(
         "Escaneo WiFi",
         String("Redes: ") + String(totalFound),
