@@ -3,6 +3,9 @@ Sketch uses 1077968 bytes (82%) of program storage space. Maximum is 1310720 byt
 Global variables use 50400 bytes (15%) of dynamic memory, leaving 277280 bytes for local variables. Maximum is 327680 bytes.
 100.0% 688996/688996 bytes... 
 Wrote 1081344 bytes (688996 compressed) at 0x00010000 in 11.4 seconds (755.6 kbit/s).
+
+Sketch uses 1077580 bytes (82%) of program storage space. Maximum is 1310720 bytes.
+Global variables use 50400 bytes (15%) of dynamic memory, leaving 277280 bytes for local variables. Maximum is 327680 bytes.
 */
 
 #include "config.h"
@@ -25,8 +28,6 @@ String wifiDisplayName(const ManagedAccessPoint& device) {
 }
 
 void runWifiScanAndShow() {
-    displayShowLines("Escaneando WiFi...", "");
-
     const int totalFound = wifiScanNetworks(wifiDevices, WIFI_SCAN_MAX_RESULTS);
     if (totalFound < 0) {
         displayShowLines("Escaneo WiFi", "Error al escanear");
@@ -42,10 +43,10 @@ void runWifiScanAndShow() {
 
     const ManagedAccessPoint& best = wifiDevices[0];
     displayShowLines(
-        "Escaneo WiFi",
         String("Redes: ") + String(totalFound),
-        String("Top: ") + wifiDisplayName(best),
-        String("RSSI: ") + String(best.rssi) + String(" dBm CH: ") + String(best.channel)
+        String("RSSI: ") + String(best.rssi) + String(" dBm CH: ") + String(best.channel),
+        best.bssid,
+        wifiDisplayName(best)
     );
 
     Serial.println("Redes Wi-Fi encontradas:");
@@ -84,37 +85,19 @@ void setup() {
     displayText("Iniciando ESP32...", 0, 0, 1);
 
     // Conectar a la red Wi-Fi
-    // Serial.print("Conectando a Wi-Fi");
-    displayText("Conectando a Wi-Fi...", 0, 0, 1);
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-    while (WiFi.status() != WL_CONNECTED) {
-        wifiLedUpdate();
-        delay(500);
-        // Serial.print(".");
-    }
-    // Serial.println("\nConectado a Wi-Fi");
-    // Serial.print("Dirección IP: ");
-    // Serial.println(WiFi.localIP());
-    wifiLedSetState(WifiLedState::Connected);
-    displayText("Conectado a Wi-Fi", 0, 0, 1);
-    displayText(WiFi.localIP().toString().c_str(), 0, 10, 1);
+    // displayText("Conectando a Wi-Fi...", 0, 0, 1);
+    // WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    // while (WiFi.status() != WL_CONNECTED) {
+    //     wifiLedUpdate();
+    //     delay(500);
+    // }
+    // wifiLedSetState(WifiLedState::Connected);
+    // displayText("Conectado a Wi-Fi", 0, 0, 1);
+    // displayText(WiFi.localIP().toString().c_str(), 0, 10, 1);
 
     runWifiScanAndShow();
     lastWifiScan = millis();
 }
-
-// void setup() {
-//     Serial.begin(115200);
-//     delay(1000);
-//     Serial.println("Conectando a Wi-Fi...");
-//     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-
-//     while (WiFi.status() != WL_CONNECTED) {
-//         delay(500);
-//         Serial.print(".");
-//     }
-//     Serial.println("\n¡Conectado a Wi-Fi!");
-// }
 
 void loop() {
     if (WiFi.status() == WL_CONNECTED) {
