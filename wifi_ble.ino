@@ -79,30 +79,29 @@ void setup() {
     }
 
     // Serial.println("Iniciando ESP32...");
-    displayText("Iniciando ESP32...", 0, 0, 1);
+    // displayText("Iniciando ESP32...", 0, 0, 1);
 
     // Conectar a la red Wi-Fi
-    // displayText("Conectando a Wi-Fi...", 0, 0, 1);
-    // WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-    // while (WiFi.status() != WL_CONNECTED) {
-    //     wifiLedUpdate();
-    //     delay(500);
-    // }
-    // wifiLedSetState(WifiLedState::Connected);
-    // displayText("Conectado a Wi-Fi", 0, 0, 1);
-    // displayText(WiFi.localIP().toString().c_str(), 0, 10, 1);
+    displayText("Conectando a Wi-Fi...", 0, 0, 1);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    while (WiFi.status() != WL_CONNECTED) {
+        wifiLedUpdate();
+        delay(500);
+    }
+    wifiLedSetState(WifiLedState::Connected);
+    displayText(WiFi.localIP().toString().c_str(), 0, 0, 1);
 
     runWifiScanAndShow();
     lastWifiScan = millis();
 }
 
 void loop() {
-    // if (WiFi.status() == WL_CONNECTED) {
-    //     wifiLedSetState(WifiLedState::Connected);
-    // } else {
-    //     wifiLedSetState(WifiLedState::Connecting);
-    // }
-    // wifiLedUpdate();
+    if (WiFi.status() == WL_CONNECTED) {
+        wifiLedSetState(WifiLedState::Connected);
+    } else {
+        wifiLedSetState(WifiLedState::Connecting);
+    }
+    wifiLedUpdate();
 
     const unsigned long now = millis();
     if (WiFi.status() == WL_CONNECTED && now - lastWifiScan >= WIFI_SCAN_INTERVAL_MS) {
