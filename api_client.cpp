@@ -55,3 +55,40 @@ void enviarWifiScanAlAPI(const ManagedAccessPoint* devices, size_t count, int to
 
     enviarDatosAlAPI("/api/wifi-scan", payload);
 }
+
+void enviarMonitorScanAlAPI(const WifiClient* clients, size_t count, int totalFound) {
+    if (clients == nullptr) {
+        Serial.println("Clientes monitor nulos");
+        return;
+    }
+
+    String deviceMac = WiFi.macAddress();
+    String payload = "{\"device_mac\":\"" + deviceMac + "\",\"total_found\":" +
+                     String(totalFound) + ",\"visible\":" + String(count) + ",\"clients\":";
+    payload += "[";
+
+    for (size_t index = 0; index < count; ++index) {
+        if (index > 0) {
+            payload += ",";
+        }
+
+        payload += "{\"mac\":\"";
+        payload += clients[index].mac;
+        payload += "\"";
+        payload += ",\"associated_bssid\":";
+        if (clients[index].associatedBssid[0] != '\0') {
+            payload += "\"";
+            payload += clients[index].associatedBssid;
+            payload += "\"";
+        } else {
+            payload += "null";
+        }
+        payload += ",\"rssi\":" + String(clients[index].rssi);
+        payload += ",\"channel\":" + String(clients[index].channel);
+        payload += "}";
+    }
+
+    payload += "]}";
+
+    enviarDatosAlAPI("/api/wifi-clients", payload);
+}

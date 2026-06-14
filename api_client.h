@@ -6,4 +6,5 @@
 
 void enviarDatosAlAPI(const String& endpoint, const String& payload);
 void enviarWifiScanAlAPI(const ManagedAccessPoint* devices, size_t count, int totalFound);
+void enviarMonitorScanAlAPI(const WifiClient* clients, size_t count, int totalFound);
 #endif
