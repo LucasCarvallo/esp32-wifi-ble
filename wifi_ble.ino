@@ -3,6 +3,17 @@ Sketch uses 1080340 bytes (82%) of program storage space. Maximum is 1310720 byt
 Global variables use 52384 bytes (15%) of dynamic memory, leaving 275296 bytes for local variables. Maximum is 327680 bytes.
 100.0% 690835/690835 bytes... 
 Wrote 1080496 bytes (690835 compressed) at 0x00010000 in 11.2 seconds (771.4 kbit/s).
+
+Primero se conecta a Wi-Fi y muestra la IP local. Luego entra en un ciclo donde cada 90 segundos hace un escaneo managed de redes Wi-Fi cercanas,
+mostrando la mejor red encontrada y enviando los resultados al API.
+De ese escaneo extrae los canales activos para hacer sweeps en modo monitor cada 15 segundos entre escaneos managed,
+detectando clientes cercanos y enviando esos resultados al API también.
+
+Detalladamente (tiempos):
+- Al iniciar, conecta a Wi-Fi (5-10 segundos) y muestra IP local.
+- Primer escaneo managed (10-15 segundos), muestra mejor red y envía resultados al API.
+- Cada 90 segundos, nuevo escaneo managed (10-15 segundos), actualización de canales activos, muestra mejor red y envía resultados al API.
+- Cada 15 segundos entre escaneos managed, sweep monitor (5-10 segundos), detecta clientes, muestra cantidad y envía resultados al API.
 */
 
 #include "config.h"
