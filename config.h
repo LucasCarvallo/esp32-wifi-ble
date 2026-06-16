@@ -11,9 +11,9 @@ constexpr unsigned long WIFI_LED_CONNECTING_BLINK_MS = 500; // Intervalo de parp
 constexpr unsigned long WIFI_LED_ERROR_BLINK_MS = 150; // Intervalo de parpadeo en caso de error
 
 // Configuraciones del Escáner - Modo Managed
-#define TIEMPO_ESCANEO_WIFI 30 // Segundos dedicados al sniffer Wi-Fi
+#define TIEMPO_ESCANEO_WIFI 30 // Segundos dedicados al sniffer Wi-Fi (creo que no se usa)
 // #define TIEMPO_ESCANEO_BLE  30 // Segundos dedicados al escaneo Bluetooth
-constexpr unsigned long WIFI_SCAN_INTERVAL_MS = 10000;    // Intervalo managed standalone (ms)
+constexpr unsigned long WIFI_SCAN_INTERVAL_MS = 10000;    // Intervalo managed standalone (ms) (creo que no se usa)
 constexpr unsigned long MANAGED_SCAN_INTERVAL_MS = 90000; // Intervalo managed en modo híbrido (ms)
 constexpr size_t WIFI_SCAN_MAX_RESULTS = 10; // Máximo número de redes Wi-Fi a mostrar y enviar al API (se puede subir a 20-40 para mostrar más redes, pero cuidado con el impacto en la legibilidad y el rendimiento)
 
